@@ -1,5 +1,5 @@
 # Regime-Switching Asset Allocation
-==================================
+--------------------------------------------------------------
 
 A machine learning portfolio strategy for Canadian investors that detects market
 regimes using a Hidden Markov Model and adjusts allocations accordingly.
