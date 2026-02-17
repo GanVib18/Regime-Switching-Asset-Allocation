@@ -1,8 +1,8 @@
-# 📈 Regime-Switching Asset Allocation
+# Regime-Switching Asset Allocation
 
 A machine learning portfolio strategy designed for Canadian investors. This project utilizes a **Hidden Markov Model (HMM)** to detect market regimes and dynamically adjust allocations across TSX-listed ETFs.
 
-## 🚀 Strategy Overview
+## Strategy Overview
 
 This strategy performs a 10-year backtest (2015–2024) using five liquid TSX ETFs, validated through a rigorous **walk-forward out-of-sample** methodology.
 
@@ -20,15 +20,15 @@ This strategy performs a 10-year backtest (2015–2024) using five liquid TSX ET
 
 ---
 
-## 🧠 How It Works
+## How It Works
 
 The pipeline follows a four-stage process to move from raw market data to tradeable signals:
 
 1. **Feature Engineering**: Computes 10 daily market features, including realized volatility, momentum, credit spread proxies, yield curve slope, and equity-bond correlation.
 2. **Regime Classification**: A **Gaussian HMM** classifies market states into three distinct regimes:
-* **🟢 Low-Vol Bull** (~52% of days): High equity exposure.
-* **🟡 Mid-Vol Normal** (~46% of days): Balanced, "all-weather" allocation.
-* **🔴 High-Vol Crisis** (~2% of days): Defensive tilt—heavy on Bonds and Gold.
+* **Low-Vol Bull** (~52% of days): High equity exposure.
+* **Mid-Vol Normal** (~46% of days): Balanced, "all-weather" allocation.
+* **High-Vol Crisis** (~2% of days): Defensive tilt—heavy on Bonds and Gold.
 
 
 3. **Optimization**: Weights are derived using **Mean-Variance Optimization** with **Ledoit-Wolf shrinkage**. Note: The Crisis regime uses a defensive hard-coded split ( Bonds /  Gold /  Equities) due to the rarity of training samples.
@@ -36,7 +36,7 @@ The pipeline follows a four-stage process to move from raw market data to tradea
 
 ---
 
-## 🇨🇦 ETF Universe
+## ETF Universe
 
 All assets are TSX-listed, requiring no currency conversion for CAD-funded accounts.
 
@@ -50,7 +50,7 @@ All assets are TSX-listed, requiring no currency conversion for CAD-funded accou
 
 ---
 
-## 🛠 Installation & Usage
+## Installation & Usage
 
 ### Requirements
 
@@ -83,7 +83,7 @@ run_pipeline(use_optimization=True, risk_aversion={0: 2.0, 1: 3.0, 2: 5.0})
 
 ---
 
-## 📂 Project Structure
+## Project Structure
 
 Results are exported to `/regime_switching_output/`, including:
 
@@ -92,7 +92,7 @@ Results are exported to `/regime_switching_output/`, including:
 
 ---
 
-## ⚠️ Limitations & Disclaimer
+## Limitations & Disclaimer
 
 * **Sample Size**: The Crisis regime only contains 52 days of data; hence the manual defensive weighting.
 * **Gold Bias**: The 60/40 benchmark lacks gold, while this strategy maintains 10–25%—some performance is derived from this structural tilt.
