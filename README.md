@@ -1,126 +1,101 @@
-# Regime-Switching Asset Allocation
---------------------------------------------------------------
+# 📈 Regime-Switching Asset Allocation
 
-A machine learning portfolio strategy for Canadian investors that detects market
-regimes using a Hidden Markov Model and adjusts allocations accordingly.
+A machine learning portfolio strategy designed for Canadian investors. This project utilizes a **Hidden Markov Model (HMM)** to detect market regimes and dynamically adjust allocations across TSX-listed ETFs.
 
-10-year backtest (2015–2024) using five TSX-listed ETFs, with walk-forward
-out-of-sample validation.
+## 🚀 Strategy Overview
 
+This strategy performs a 10-year backtest (2015–2024) using five liquid TSX ETFs, validated through a rigorous **walk-forward out-of-sample** methodology.
 
-Results (walk-forward average across 4 out-of-sample periods)
---------------------------------------------------------------
-Strategy                  Sharpe    Ann. Return    Max DD
----------------------------------------------------------
-60/40 Benchmark            0.88        9.5%        -7.3%
-80/20 Benchmark            1.04       13.1%        -8.2%
-Vol Threshold              1.08       11.1%        -7.3%
-3-Regime HMM               1.06       11.0%        -6.8%
-3-Regime HMM Optimized     1.27       15.0%        -8.3%
+### Key Results
 
+*Average across 4 out-of-sample periods*
 
-How It Works
-------------
-1. Ten market features are computed daily (realised volatility, momentum,
-   credit spread proxy, yield curve slope, equity-bond correlation).
+| Strategy | Sharpe Ratio | Ann. Return | Max Drawdown |
+| --- | --- | --- | --- |
+| 60/40 Benchmark | 0.88 | 9.5% | -7.3% |
+| 80/20 Benchmark | 1.04 | 13.1% | -8.2% |
+| Vol Threshold | 1.08 | 11.1% | -7.3% |
+| 3-Regime HMM | 1.06 | 11.0% | -6.8% |
+| **3-Regime HMM Optimized** | **1.27** | **15.0%** | **-8.3%** |
 
-2. A Gaussian HMM classifies each day into one of three regimes:
-   - Low-Vol Bull   (~52% of days): high equity allocation
-   - Medium-Vol Normal (~46%): balanced allocation
-   - High-Vol Crisis (~2%): defensive — bonds and gold heavy
+---
 
-3. Portfolio weights are derived per regime using mean-variance optimisation
-   with Ledoit-Wolf covariance shrinkage. The crisis allocation is hard-coded
-   (55% bonds / 25% gold / 20% equities) due to insufficient training data.
+## 🧠 How It Works
 
-4. Daily allocations blend regime weights by posterior probability rather than
-   hard-switching. A 5-day dwell filter suppresses noisy regime flips.
+The pipeline follows a four-stage process to move from raw market data to tradeable signals:
+
+1. **Feature Engineering**: Computes 10 daily market features, including realized volatility, momentum, credit spread proxies, yield curve slope, and equity-bond correlation.
+2. **Regime Classification**: A **Gaussian HMM** classifies market states into three distinct regimes:
+* **🟢 Low-Vol Bull** (~52% of days): High equity exposure.
+* **🟡 Mid-Vol Normal** (~46% of days): Balanced, "all-weather" allocation.
+* **🔴 High-Vol Crisis** (~2% of days): Defensive tilt—heavy on Bonds and Gold.
 
 
-ETF Universe (TSX-listed, no currency conversion required)
-----------------------------------------------------------
-XIU.TO   iShares S&P/TSX 60
-VFV.TO   Vanguard S&P 500 Index (CAD-hedged)
-XEF.TO   iShares MSCI EAFE
-XBB.TO   iShares Canadian Bond Index
-CGL-C.TO iShares Gold Bullion (CAD-hedged)
+3. **Optimization**: Weights are derived using **Mean-Variance Optimization** with **Ledoit-Wolf shrinkage**. Note: The Crisis regime uses a defensive hard-coded split ( Bonds /  Gold /  Equities) due to the rarity of training samples.
+4. **Signal Smoothing**: Uses a **5-day dwell filter** and posterior probability blending to prevent "whipsawing" (excessive trading from noisy regime flips).
 
+---
 
-Requirements
-------------
-Python 3.8+
-yfinance
-hmmlearn
-scikit-learn
-scipy
-numpy
-pandas
-matplotlib
-seaborn
-joblib
+## 🇨🇦 ETF Universe
 
-Install: pip install yfinance hmmlearn scikit-learn scipy numpy pandas matplotlib seaborn joblib
+All assets are TSX-listed, requiring no currency conversion for CAD-funded accounts.
 
+| Ticker | Fund Name | Asset Class |
+| --- | --- | --- |
+| **XIU.TO** | iShares S&P/TSX 60 | Canadian Large Cap |
+| **VFV.TO** | Vanguard S&P 500 (CAD-hedged) | US Equities |
+| **XEF.TO** | iShares MSCI EAFE | Intl Developed |
+| **XBB.TO** | iShares Canadian Bond Index | Fixed Income |
+| **CGL-C.TO** | iShares Gold Bullion (CAD-hedged) | Commodities |
 
-Usage
---------------------
-Run the full pipeline with optimised weights and walk-forward validation:
+---
 
-    results = quick_start_with_walk_forward()
+## 🛠 Installation & Usage
 
-Step-by-step:
+### Requirements
 
-    data              = prepare_data_only()
-    data_with_regimes = train_model_only()
-    portfolio         = run_backtest_only(use_optimization=True)
-    comparison        = compare_strategies(use_optimization=True)
-    walk_forward      = run_walk_forward_only()
+```bash
+pip install yfinance hmmlearn scikit-learn scipy numpy pandas matplotlib seaborn joblib
 
-Generate charts and tables for the blog post:
+```
 
-    create_presentation_materials()
+### Quick Start
 
-Custom risk aversion parameters:
+Run the full pipeline with optimized weights and walk-forward validation:
 
-    run_pipeline(use_optimization=True, risk_aversion={0: 2.0, 1: 3.0, 2: 5.0})
+```python
+results = quick_start_with_walk_forward()
 
+```
 
-Output Files
-------------
-/regime_switching_output/
-    cleaned_data.csv              — feature-engineered daily data
-    data_with_regimes.csv         — data with HMM regime labels
-    model_hmm.pkl                 — saved HMM model bundle
-    portfolio_optimized.csv       — daily portfolio values
-    walk_forward_results.csv      — per-split out-of-sample metrics
-    model_comparison_summary.csv  — full-sample strategy comparison
+### Granular Control
 
-/regime_switching_output/presentation_charts/
-    01_regime_timeline.png
-    02_cumulative_returns.png
-    03_drawdown_analysis.png
-    04_rolling_metrics.png
-    05_metrics_comparison.png
-    06_risk_return_scatter.png
-    07_regime_allocations.png
-    08_walk_forward_validation.png
+```python
+# Step-by-step execution
+data              = prepare_data_only()
+data_with_regimes = train_model_only()
+portfolio         = run_backtest_only(use_optimization=True)
 
+# Custom risk aversion parameters
+run_pipeline(use_optimization=True, risk_aversion={0: 2.0, 1: 3.0, 2: 5.0})
 
-Limitations
------------
-- Only 52 crisis-regime days in the full dataset. Crisis allocation is
-  hard-coded rather than optimised for this reason.
-- The 60/40 benchmark holds zero gold; this strategy holds 10–25% at all
-  times. Some outperformance reflects a structural gold tilt, not purely
-  regime-switching skill.
-- Walk-forward validation covers 4 one-year splits — enough to span
-  different macro environments, but not a large statistical sample.
-- Sharpe ratios in the walk-forward table use a constant 2% risk-free rate.
-  Full-sample Sharpe uses the actual time-varying T-bill rate (^IRX).
-- Transaction costs modelled as a flat 0.08% bid-ask spread per trade.
+```
 
+---
 
-Disclaimer
-----------
-For educational purposes only. Not investment advice.
-Past performance is not indicative of future results.
+## 📂 Project Structure
+
+Results are exported to `/regime_switching_output/`, including:
+
+* `model_hmm.pkl`: The trained HMM bundle.
+* `presentation_charts/`: Visualizations including Cumulative Returns, Drawdown Analysis, and Regime Timelines.
+
+---
+
+## ⚠️ Limitations & Disclaimer
+
+* **Sample Size**: The Crisis regime only contains 52 days of data; hence the manual defensive weighting.
+* **Gold Bias**: The 60/40 benchmark lacks gold, while this strategy maintains 10–25%—some performance is derived from this structural tilt.
+* **Costs**: Transaction costs are modeled at a flat 0.08% spread.
+
+> This project is for **educational purposes only**. It is not investment advice. Past performance is never a guarantee of future results.
