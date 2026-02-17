@@ -87,8 +87,10 @@ run_pipeline(use_optimization=True, risk_aversion={0: 2.0, 1: 3.0, 2: 5.0})
 
 Results are exported to `/outputs/`, including:
 
-* `model_hmm.pkl`: The trained HMM bundle.
-* `presentation_charts/`: Visualizations including Cumulative Returns, Drawdown Analysis, and Regime Timelines.
+* `data`: Contains the raw and processed time-series data used for model training and backtesting.
+* `model`: The persistent ML model required to reproduce or extend the analysis.
+* `weights`: The specific allocation logic used across different market environments.
+* `charts`: High-resolution visualizations (PNG) for performance analysis and presentation.
 
 ---
 
