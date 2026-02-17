@@ -85,7 +85,7 @@ run_pipeline(use_optimization=True, risk_aversion={0: 2.0, 1: 3.0, 2: 5.0})
 
 ## Project Structure
 
-Results are exported to `/regime_switching_output/`, including:
+Results are exported to `/outputs/`, including:
 
 * `model_hmm.pkl`: The trained HMM bundle.
 * `presentation_charts/`: Visualizations including Cumulative Returns, Drawdown Analysis, and Regime Timelines.
