@@ -1,0 +1,24 @@
+OPTIMIZED REGIME-SPECIFIC WEIGHTS
+============================================================
+
+Regime 0 (Low-Vol (Bull)):
+  XIU.TO: 40.00%
+  VFV.TO: 40.00%
+  XEF.TO: 5.00%
+  XBB.TO: 5.00%
+  CGL-C.TO: 10.00%
+
+Regime 1 (Medium-Vol (Normal)):
+  XIU.TO: 8.03%
+  VFV.TO: 40.00%
+  XEF.TO: 21.97%
+  XBB.TO: 5.00%
+  CGL-C.TO: 25.00%
+
+Regime 2 (High-Vol (Crisis)):
+  XIU.TO: 5.00%
+  VFV.TO: 10.00%
+  XEF.TO: 5.00%
+  XBB.TO: 55.00%
+  CGL-C.TO: 25.00%
+
