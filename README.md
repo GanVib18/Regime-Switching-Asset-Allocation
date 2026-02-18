@@ -18,6 +18,8 @@ This strategy performs a 10-year backtest (2015–2024) using five liquid TSX ET
 | 3-Regime HMM | 1.06 | 11.0% | -6.8% |
 | **3-Regime HMM Optimized** | **1.27** | **15.0%** | **-8.3%** |
 
+<img src="https://github.com/GanVib18/Regime-Switching-Asset-Allocation/blob/main/outputs/charts/chart_cumulative_returns.png">
+
 ---
 
 ## How It Works
