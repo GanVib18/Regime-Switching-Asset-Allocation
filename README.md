@@ -2,6 +2,8 @@
 
 A machine learning portfolio strategy designed for Canadian investors. This project utilizes a **Hidden Markov Model (HMM)** to detect market regimes and dynamically adjust allocations across TSX-listed ETFs.
 
+ **[Medium Blog](https://medium.com/@gandhivibhuti1802/smarter-than-60-40-building-a-regime-switching-portfolio-with-machine-learning-b6c1172b84f5)**
+
 ## Strategy Overview
 
 This strategy performs a 10-year backtest (2015–2024) using five liquid TSX ETFs, validated through a rigorous **walk-forward out-of-sample** methodology.
